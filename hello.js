@@ -1,1 +1,1 @@
-console.log("gretings from hello.js")
+module.exports = 'this is hello.js'
