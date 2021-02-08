@@ -18,6 +18,18 @@ app.get('/', function(req, res) {
 app.get('/api/lessons', function(req, res) {
     res.send(lessons)
 })
+
+// path for finding a single lesson
+app.get('/api/lessons/:id', function(req, res) {
+    const lesson = lessons.find(function(l) {
+        return l.id === parseInt(req.params.id)
+    })
+    if(!lesson) {
+        res.status(404).send('The lesson ID given was not found')
+    }
+    res.send(lesson)
+})
+
 // post request 
 app.post('/api/lessons', function(req, res) {
     if(!req.body.lesson || req.body.lesson.length < 3) {
@@ -31,14 +43,39 @@ app.post('/api/lessons', function(req, res) {
     lessons.push(lesson)
     res.send(lesson)
 })
-// path for finding a single lesson
-app.get('/api/lessons/:id', function(req, res) {
+
+
+app.put('/api/lessons/:id', function(req, res) {
+    // look up existing lessons
+    //if they dont return 404 error, not found
     const lesson = lessons.find(function(l) {
         return l.id === parseInt(req.params.id)
     })
     if(!lesson) {
         res.status(404).send('The lesson ID given was not found')
     }
+    //validate inputStream
+    //if invalid inoput return 400 error -- bad request
+    if(!req.body.lesson || req.body.lesson.length < 3) {
+        res
+        .status(400)
+        .send("lesson required and should be 3 or more characters long.")
+    }
+    //update the specified lesson
+    //return the updated lesson to the client, show in browser
+    lesson.lesson = req.body.lesson
+    res.send(lesson)
+})
+
+app.delete('/api/lessons/:id', function(req, res) {
+    const lesson = lessons.find(function(l) {
+        return l.id === parseInt(req.params.id)
+    })
+    if(!lesson) {
+        res.status(404).send('The lesson ID given was not found')
+    }
+    const index = lessons.indexOf(lesson)
+    lessons.splice(index, 1)
     res.send(lesson)
 })
 
