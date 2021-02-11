@@ -1,8 +1,45 @@
 const express = require('express')
 const router = express.Router()
+const Movie = require('../models/movie.js')
 
-router.get('/', (req, res) => {
-    res.send('hello world!')
+router.get('/', async (req, res) => {
+    try {
+        const movies = await Movie.find()
+        res.json(movies) 
+    } catch (err) {
+        res.status(500).json({ message: err.message})
+    }
 })
+
+router.get('/:id', (req, res) => {
+    res.send(req.params.id)
+})
+
+router.post('/', async (req, res) => {
+    const movie = new Movie({
+        movieDirector: req.body.movieDirector,
+        movieTitle: req.body.movieTitle,
+    })
+    try { 
+        const newMovie = await movie.save()
+        res.status(201).json(newMovie)
+    } catch (err) {
+        res.status(400).json({ message: err.message})
+    }
+})
+
+async function getMovie(req, res, next) {
+    let movie
+    try {
+        movie = await Movie.findById(req.params.id)
+        if(movie === null) {
+            return res.status(404).json({ message: 'Cannont find movie'})
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'ID selected was not found'})
+    }
+    res.movie = movies
+    next()
+}
 
 module.exports = router
