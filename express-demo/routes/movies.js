@@ -11,8 +11,8 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:id', (req, res) => {
-    res.send(req.params.id)
+router.get('/:id', getMovie, (req, res) => {
+    res.json(res.movie)
 })
 
 router.post('/', async (req, res) => {
@@ -38,7 +38,7 @@ async function getMovie(req, res, next) {
     } catch (err) {
         res.status(500).json({ message: 'ID selected was not found'})
     }
-    res.movie = movies
+    res.movie = movie
     next()
 }
 
