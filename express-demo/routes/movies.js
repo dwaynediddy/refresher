@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
         const movies = await Movie.find()
         res.json(movies) 
     } catch (err) {
-        res.status(500).json({ message: err.message})
+        res.status(500).json({ message: err.message })
     }
 })
 
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
         const newMovie = await movie.save()
         res.status(201).json(newMovie)
     } catch (err) {
-        res.status(400).json({ message: err.message})
+        res.status(400).json({ message: err.message })
     }
 })
 
@@ -33,12 +33,23 @@ router.delete('/:id', getMovie, async (req, res) =>{
         await res.movie.remove()
         res.json({ message: 'Deleted movie'})
     } catch {
-        res.status(500).json({ message: 'could not find movie. '})
+        res.status(500).json({ message: 'could not find movie.' })
     }
 })
 
 router.patch('/:id', getMovie, async (req, res) =>{
-
+    if(req.body.movieTitle != null) {
+        res.movie.movieTitle = req.body.movieTitle
+    }
+    if(req.body.movieDirector != null) {
+        res.movie.movieDirector = req.body.movieDirector
+    }
+    try {
+        const updatedMovie = await res.movie.save()
+        res.json(updatedMovie)
+    } catch (err) {
+        res.status(400).json({ message: 'movie not updated' })
+    }
 })
 
 async function getMovie(req, res, next) {
