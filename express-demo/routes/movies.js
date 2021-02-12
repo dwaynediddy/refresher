@@ -28,6 +28,19 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.delete('/:id', getMovie, async (req, res) =>{ 
+    try {
+        await res.movie.remove()
+        res.json({ message: 'Deleted movie'})
+    } catch {
+        res.status(500).json({ message: 'could not find movie. '})
+    }
+})
+
+router.patch('/:id', getMovie, async (req, res) =>{
+
+})
+
 async function getMovie(req, res, next) {
     let movie
     try {
