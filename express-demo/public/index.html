@@ -6,5 +6,17 @@
     </head>
     <body>
         <p>Hello world!</p>
+        <form id="user_form">
+            <field>
+                <label>RESTful API</label><br/>
+
+                <label>GET</label>
+                <input id="get_request" type="text" placeholder="get movies" />
+                <button id="getButton" type="submit" value="submit" name="getButton">Submit</button>
+            </field>
+        </form>
+        <p>movies in database</p>
+        <div id="results"></div>
+        <script src="./api.js"></script>
     </body>
 </html>
