@@ -21,7 +21,7 @@ db.on('error', err => {
   console.error('connection error:', err)
 })
 
-app.use(express.json())
+app.use(express.static('public'))
 app.use('/movies', movieRouter)
 
 // const lessons = [
