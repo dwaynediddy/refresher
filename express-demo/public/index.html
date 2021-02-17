@@ -15,6 +15,23 @@
                 <button id="getButton" type="submit" value="submit" name="getButton">Submit</button>
             </field>
         </form>
+
+        <form id='user_form_post'>
+            <field>
+                <label>Post</label>
+                <input id="movieIput" type="text" name="movieTitle" placeholder="post movie" />
+                <br/>
+                <label>Director</label>
+                <input id="directorInput" type="text" name="movieDirector" placeholder="post movie director" />              
+                <br/>
+                <label>Date</label>
+                <input id="dateInput" type="text" name="movieDate" placeholder="postmovieDate" placeholder="post movie date" />
+                <button id="postButton" type="submit" value="submit" name="postButton">Submit</button>
+                <br/>
+            </field>
+        </form>
+
+        
         <p>movies in database</p>
         <div id="results"></div>
         <script src="./api.js"></script>
